@@ -15,7 +15,8 @@ def parse_args():
     parser.add_argument('--index-col', dest='index_col', help='The index column of the data file.',
                         default=None)
     parser.add_argument('--type', '-t', dest='type', help='The type of plot to be produced. Default: Line plot.',
-                        choices=['line'], default='line')
+                        choices=['line', 'bar', 'barh', 'hist', 'box', 'area'], 
+                        default='line')
 
     return parser.parse_args()
 
@@ -41,7 +42,7 @@ def plot(data, columns, type='line'):
         except ValueError:
             plotted_data[column] = data[column]
 
-    plotted_data.plot()
+    plotted_data.plot(kind=type)
     plt.show()
     plt.close()
 
