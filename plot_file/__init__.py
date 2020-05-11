@@ -40,8 +40,14 @@ def load_data(path, delimiter=',', header=None, index_col=None):
     except (ValueError, TypeError):
         pass
 
-    data = pd.read_csv(path, delimiter=delimiter, header=0 if header else None, index_col=index_col)
-    data = data.rename(columns=lambda x: x.strip())
+    if path.endswith('.csv') or path.endswith('.tsv') or path.endswith('.txt')
+        data = pd.read_csv(path, delimiter=delimiter, header=0 if header else None, index_col=index_col)
+        data = data.rename(columns=lambda x: x.strip())
+    elif path.endswith('.h5'):
+        data = pd.read_hdf(path)
+    else:
+        raise RuntimeError('Unsupported file format.')
+    
 
     return data
 
