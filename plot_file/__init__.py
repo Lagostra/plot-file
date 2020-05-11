@@ -2,6 +2,8 @@ import argparse
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Quickly visualize data from a text file.')
