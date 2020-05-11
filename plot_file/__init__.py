@@ -17,6 +17,8 @@ def parse_args():
     parser.add_argument('--type', '-t', dest='type', help='The type of plot to be produced. Default: Line plot.',
                         choices=['line', 'bar', 'barh', 'hist', 'box', 'area'], 
                         default='line')
+    parser.add_argument('--output-file', '-o', dest='output_file', help='Path for the output file if the plot should be saved.',
+                        default=None)
 
     return parser.parse_args()
 
@@ -33,7 +35,7 @@ def load_data(path, delimiter=',', header=None, index_col=None):
     return data
 
 
-def plot(data, columns, type='line'):
+def plot(data, columns, type='line', output_file=None):
     if columns is None:
         plotted_data = data
     else:
@@ -46,6 +48,9 @@ def plot(data, columns, type='line'):
                 plotted_data[column] = data[column]
 
     plotted_data.plot(kind=type)
+    plt.tight_layout()
+    if output_file:
+        plt.savefig(output_file)
     plt.show()
     plt.close()
 
@@ -53,4 +58,4 @@ def plot(data, columns, type='line'):
 def main():
     args = parse_args()
     data = load_data(args.path, args.delimiter, args.header, args.index_col)
-    plot(data, args.columns, args.type)
+    plot(data, args.columns, args.type, args.output_file)
