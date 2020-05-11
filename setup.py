@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version_string = '0.0.8'
+version_string = '0.0.9'
 
 description = 'A script for quickly plotting data from a text file.'
 

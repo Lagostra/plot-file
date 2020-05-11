@@ -7,7 +7,7 @@ sns.set()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Quickly visualize data from a text file.')
-    parser.add_argument('path', type=str, help='Path to the file that should be plotted.')
+    parser.add_argument('path', type=str, help='Path to the file that should be plotted.', nargs='?', default=None)
     parser.add_argument('--columns', '-c', dest='columns', help='The column(s) that should be plotted, either as column index or,' +  
                                                                 'if the file contains headers, column name.',
                         default=None, nargs='+')
@@ -25,7 +25,13 @@ def parse_args():
     parser.add_argument('--ylabel', dest='ylabel', help="The y-axis label of the plot.", default=None)
     parser.add_argument('--title', dest='title', help="The title of the plot.", default=None)
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    if args.path is None:
+        parser.print_help()
+        return None
+
+    return args
 
 
 def load_data(path, delimiter=',', header=None, index_col=None):
@@ -70,5 +76,6 @@ def plot(data, columns, type='line', output_file=None, title=None, xlabel=None, 
 
 def main():
     args = parse_args()
-    data = load_data(args.path, args.delimiter, args.header, args.index_col)
-    plot(data, args.columns, args.type, args.output_file, args.title, args.xlabel, args.ylabel)
+    if args:
+        data = load_data(args.path, args.delimiter, args.header, args.index_col)
+        plot(data, args.columns, args.type, args.output_file, args.title, args.xlabel, args.ylabel)
