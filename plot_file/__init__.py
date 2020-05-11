@@ -34,13 +34,16 @@ def load_data(path, delimiter=',', header=None, index_col=None):
 
 
 def plot(data, columns, type='line'):
-    plotted_data = pd.DataFrame()
-    for i, column in enumerate(columns):
-        try:
-            c = int(column)
-            plotted_data[data.columns[c]] = data.iloc[:, c]
-        except ValueError:
-            plotted_data[column] = data[column]
+    if columns is None:
+        plotted_data = data
+    else:
+        plotted_data = pd.DataFrame()
+        for i, column in enumerate(columns):
+            try:
+                c = int(column)
+                plotted_data[data.columns[c]] = data.iloc[:, c]
+            except ValueError:
+                plotted_data[column] = data[column]
 
     plotted_data.plot(kind=type)
     plt.show()
