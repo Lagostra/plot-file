@@ -26,7 +26,10 @@ def load_data(path, delimiter=',', header=None, index_col=None):
     except ValueError:
         pass
 
-    return pd.read_csv(path, delimiter=delimiter, header=0 if header else None, index_col=index_col)
+    data = pd.read_csv(path, delimiter=delimiter, header=0 if header else None, index_col=index_col)
+    data = data.rename(columns=lambda x: x.strip())
+
+    return data
 
 
 def plot(data, columns, type='line'):
